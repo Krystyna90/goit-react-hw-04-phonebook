@@ -1,10 +1,10 @@
-import { useState } from "react";
 // import PropTypes from "prop-types";
 import css from "./ContactForm.module.css";
+import useLocalStorage from "../../hooks/useLocalStorage";
 
-export default function ContactForm() {
-  const [name, setName] = useState("");
-  const [number, setNumber] = useState("");
+export default function ContactForm({ onSubmit }) {
+  const [name, setName] = useLocalStorage("name", "");
+  const [number, setNumber] = useLocalStorage("number", "");
 
   const handleChange = (event) => {
     switch (event.target.name) {
@@ -20,9 +20,18 @@ export default function ContactForm() {
         return;
     }
   };
+  const onSubmitForm = (e) => {
+    e.preventDefault();
+    onSubmit({ name, number });
+    reset();
+  };
 
+  const reset = () => {
+    setName("");
+    setNumber("");
+  };
   return (
-    <form className={css.Contact_form}>
+    <form className={css.Contact_form} onSubmit={onSubmitForm}>
       <label className={css.Contact_label}>
         Name
         <input
