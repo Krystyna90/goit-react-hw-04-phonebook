@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { nanoid } from "nanoid";
 import ContactForm from "./ContactForm/ContactForm";
 import ContactList from "./ContactList/ContactList";
@@ -6,7 +7,7 @@ import useLocalStorage from "../hooks/useLocalStorage";
 
 export default function App() {
   const [contacts, setContacts] = useLocalStorage("contacts", []);
-  const [filter, setFilter] = useLocalStorage("filter", "");
+  const [filter, setFilter] = useState("");
 
   const addContact = (data) => {
     const addingUniqueName = contacts
